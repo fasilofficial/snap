@@ -22,7 +22,7 @@ const Search = () => {
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => <PostCard video={item} />}
+        renderItem={({ item }) => <PostCard item={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 ">
             <Text className="font-pmedium text-sm text-gray-100">

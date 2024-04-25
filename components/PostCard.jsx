@@ -1,16 +1,15 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { icons } from "../constants";
+import { View, Text, Image } from "react-native";
+import React from "react";
 
 const PostCard = ({
-  video: {
+  item: {
     title,
     image,
     prompt,
     creator: { username, avatar },
   },
 }) => {
-//   const [showFullPrompt, setShowFullPrompt] = useState(false);
+  //   const [showFullPrompt, setShowFullPrompt] = useState(false);
 
   return (
     <View className="flex-col items-center px-4 mb-14 ">
