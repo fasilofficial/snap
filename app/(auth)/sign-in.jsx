@@ -7,6 +7,7 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import { getCurrentUser, signIn } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import Logo from "../../components/Logo";
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -39,12 +40,7 @@ const SignIn = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View className="w-full justify-center h-full px-4 my-6">
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115] h-[35]"
-          />
-
+          <Logo />
           <Text className="text-2xl text-white text-semibold mt-10 font-psemibold">
             Sign in
           </Text>
@@ -74,7 +70,7 @@ const SignIn = () => {
 
           <View className="justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-gray-100 font-pregular">
-              Don't have an account?
+              New here?
             </Text>
             <Link
               href="/sign-up"

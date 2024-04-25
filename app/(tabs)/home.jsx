@@ -16,10 +16,22 @@ import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import PostCard from "../../components/PostCard";
+
+function getGreeting() {
+  var currentTime = new Date();
+  var hour = currentTime.getHours();
+
+  if (hour >= 5 && hour < 12) return "Good morning";
+  else if (hour >= 12 && hour < 17) return "Good afternoon";
+  else if (hour >= 17 && hour < 20) return "Good evening";
+  else return "Good night";
+}
 
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
-  const { data: latestPosts } = useAppwrite(getLatestPosts);
+  const { data: latestPosts, refetch: refetchLatest } =
+    useAppwrite(getLatestPosts);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -27,7 +39,7 @@ const Home = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await refetch();
+    await Promise.all([refetch(), refetchLatest()]);
     setRefreshing(false);
   };
 
@@ -36,13 +48,13 @@ const Home = () => {
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => <VideoCard video={item} />}
+        renderItem={({ item }) => <PostCard video={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-6">
               <View>
                 <Text className="font-pmedium text-sm text-gray-100">
-                  Welcome back,
+                  {getGreeting()},
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
                   {user?.username}
@@ -62,7 +74,7 @@ const Home = () => {
 
             <View className="w-full flex-1 pt-5 pb-8">
               <Text className="text-gray-100 text-lg font-pregular mb-3">
-                Latest Videos
+                Latest Posts
               </Text>
 
               <Trending posts={latestPosts ?? []} />
@@ -71,8 +83,8 @@ const Home = () => {
         )}
         ListEmptyComponent={() => (
           <EmptyState
-            title="No videos found"
-            subtitle="Be the first one to upload a video"
+            title="No posts found"
+            subtitle="Be the first one to post an image"
           />
         )}
         refreshControl={

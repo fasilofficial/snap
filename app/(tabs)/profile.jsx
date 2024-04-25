@@ -9,6 +9,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import InfoBox from "../../components/InfoBox";
 import { router } from "expo-router";
+import PostCard from "../../components/PostCard";
 
 const Profile = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
@@ -26,7 +27,7 @@ const Profile = () => {
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => <VideoCard video={item} />}
+        renderItem={({ item }) => <PostCard video={item} />}
         ListHeaderComponent={() => (
           <View className="w-full justify-center items-center mt-6 mb-4 px-4 ">
             <TouchableOpacity
@@ -39,10 +40,10 @@ const Profile = () => {
                 className="w-6 h-6"
               />
             </TouchableOpacity>
-            <View className="w-16 h-16 border border-secondary rounded-lg justify-center items-center">
+            <View className="w-16 h-16 border border-secondary rounded-full justify-center items-center">
               <Image
                 source={{ uri: user?.avatar }}
-                className="w-[90%] h-[90%] rounded-lg"
+                className="w-[90%] h-[90%] rounded-full"
                 resizeMode="cover"
               />
             </View>
@@ -54,18 +55,24 @@ const Profile = () => {
               containerStyles="mt-5"
               titleStyles="text-lg"
             />
-            <View className="mt-5 flex-row">
+            <View className="mt-5">
               <InfoBox
                 title={posts.length || 0}
-                subtitle="Posts"
-                containerStyles="mr-10"
+                subtitle={`${
+                  posts.length && posts.length === 1
+                    ? "Post"
+                    : posts.length > 1
+                    ? "Posts"
+                    : ""
+                }`}
+                containerStyles=""
                 titleStyles="text-xl"
               />
-              <InfoBox
+              {/* <InfoBox
                 title="1.2K"
                 subtitle="Followers"
                 titleStyles="text-xl"
-              />
+              /> */}
             </View>
           </View>
         )}

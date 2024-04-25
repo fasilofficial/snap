@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Aora",
-    "slug": "aora",
-    "scheme": "aora",
+    "name": "Snap",
+    "slug": "snap",
+    "scheme": "snap",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,14 +15,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "package": "com.fasils.aora"
+      "package": "com.fasils.snap"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.fasils.aora"
+      "package": "com.fasils.snap"
     },
     "web": {
       "favicon": "./assets/favicon.png"

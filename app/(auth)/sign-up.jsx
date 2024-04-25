@@ -6,6 +6,8 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
+import Logo from "../../components/Logo";
 
 const SignUp = () => {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -37,11 +39,7 @@ const SignUp = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View className="w-full justify-center h-full px-4 my-6">
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115] h-[35]"
-          />
+          <Logo />
 
           <Text className="text-2xl text-white text-semibold mt-10 font-psemibold">
             Sign Up

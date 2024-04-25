@@ -7,6 +7,7 @@ import { searchPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 import { useLocalSearchParams } from "expo-router";
+import PostCard from "../../components/PostCard";
 
 const Search = () => {
   const { query } = useLocalSearchParams();
@@ -21,7 +22,7 @@ const Search = () => {
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => <VideoCard video={item} />}
+        renderItem={({ item }) => <PostCard video={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 ">
             <Text className="font-pmedium text-sm text-gray-100">
