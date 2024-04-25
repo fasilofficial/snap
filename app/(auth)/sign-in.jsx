@@ -8,6 +8,7 @@ import { Link, router } from "expo-router";
 import { getCurrentUser, signIn } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Logo from "../../components/Logo";
+import Toast from "react-native-toast-message";
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -17,7 +18,11 @@ const SignIn = () => {
 
   const submit = async () => {
     if (!form.email || !form.password)
-      Alert.alert("Error", "Please fill in all the fields");
+      return Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Please fill in all the fields",
+      });
 
     setIsSubmitting(true);
 
@@ -30,7 +35,11 @@ const SignIn = () => {
 
       router.push("/home");
     } catch (error) {
-      Alert.alert("Error", error.message);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: error.message,
+      });
     } finally {
       setIsSubmitting(false);
     }

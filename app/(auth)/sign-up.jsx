@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, Alert } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
@@ -8,6 +8,7 @@ import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Logo from "../../components/Logo";
+import Toast from "react-native-toast-message";
 
 const SignUp = () => {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -17,7 +18,11 @@ const SignUp = () => {
 
   const submit = async () => {
     if (!form.email || !form.username || !form.password)
-      Alert.alert("Error", "Please fill in all the fields");
+      return Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Please fill in all the fields",
+      });
 
     setIsSubmitting(true);
 
@@ -29,7 +34,11 @@ const SignUp = () => {
 
       router.push("/home");
     } catch (error) {
-      Alert.alert("Error", error.message);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: error.message,
+      });
     } finally {
       setIsSubmitting(false);
     }

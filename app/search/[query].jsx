@@ -5,9 +5,9 @@ import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
 import { searchPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
-import VideoCard from "../../components/VideoCard";
 import { useLocalSearchParams } from "expo-router";
 import PostCard from "../../components/PostCard";
+import Toast from "react-native-toast-message";
 
 const Search = () => {
   const { query } = useLocalSearchParams();
@@ -41,6 +41,7 @@ const Search = () => {
           />
         )}
       />
+      <Toast />
     </SafeAreaView>
   );
 };

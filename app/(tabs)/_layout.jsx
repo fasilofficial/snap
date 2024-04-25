@@ -3,6 +3,7 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { icons } from "../../constants";
 import { StatusBar } from "expo-status-bar";
+import Toast from "react-native-toast-message";
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -86,6 +87,7 @@ const TabsLayout = () => {
         />
       </Tabs>
       <StatusBar backgroundColor="#161622" style="light" />
+      <Toast />
     </>
   );
 };

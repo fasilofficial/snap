@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { icons } from "../constants";
 import { router, usePathname } from "expo-router";
+import Toast from "react-native-toast-message";
 
 const SearchInput = ({ initialQuery }) => {
   const pathname = usePathname();
@@ -28,10 +29,12 @@ const SearchInput = ({ initialQuery }) => {
       <TouchableOpacity
         onPress={() => {
           if (!query)
-            return Alert.alert(
-              "Missing Query",
-              "Please provide something to search results accross database"
-            );
+            return Toast.show({
+              type: "error",
+              text1: "Missing Query",
+              text2:
+                "Please provide something to search results accross database",
+            });
 
           if (pathname.startsWith("/search")) router.setParams({ query });
           else router.push(`/search/${query}`);

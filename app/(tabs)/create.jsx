@@ -1,21 +1,14 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { ResizeMode, Video } from "expo-av";
 import { icons } from "../../constants";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { createPost } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import Toast from "react-native-toast-message";
 
 const Create = () => {
   const [form, setForm] = useState({
@@ -42,17 +35,29 @@ const Create = () => {
 
   const submit = async () => {
     if (!form.title || !form.prompt || !form.image)
-      return Alert.alert("Please fill in all the fields");
+      return Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Please fill in all the fields",
+      });
 
     setUploading(true);
 
     try {
       await createPost({ ...form, userId: user.$id });
 
-      Alert.alert("Success", "Post created successfully");
+      Toast.show({
+        type: "success",
+        text1: "Success",
+        text2: "Post created successfully",
+      });
       router.push("/home");
     } catch (error) {
-      Alert.alert("Errror", error.message);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: error.message,
+      });
     } finally {
       setForm({ title: "", image: null, prompt: "" });
       setUploading(false);

@@ -1,10 +1,15 @@
-import { View, FlatList, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  RefreshControl,
+} from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyState from "../../components/EmptyState";
 import { getUserPosts, signOut } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
-import VideoCard from "../../components/VideoCard";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import InfoBox from "../../components/InfoBox";
@@ -20,6 +25,14 @@ const Profile = () => {
     setUser(null);
     setIsLoggedIn(false);
     router.replace("/sign-in");
+  };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
   };
 
   return (
@@ -50,7 +63,7 @@ const Profile = () => {
             <InfoBox
               title={user?.username}
               subtitle={`Member since ${new Date(
-                user.$createdAt
+                user?.$createdAt
               ).getFullYear()}`}
               containerStyles="mt-5"
               titleStyles="text-lg"
@@ -78,10 +91,13 @@ const Profile = () => {
         )}
         ListEmptyComponent={() => (
           <EmptyState
-            title="No videos found"
-            subtitle="No videos found for this search query"
+            title="No posts found"
+            subtitle="It's time to upload your first post"
           />
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </SafeAreaView>
   );
